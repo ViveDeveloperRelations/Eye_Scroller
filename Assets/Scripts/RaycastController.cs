@@ -14,7 +14,7 @@ public class RaycastController : MonoBehaviour
 
     private void Awake()
     {
-        // Enable Eye Tracking:
+        // Enable Eye Tracking
         if (EyeManager.Instance != null) { EyeManager.Instance.EnableEyeTracking = true; }
 
         //lineRenderer = GetComponent<LineRenderer>();
