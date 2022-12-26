@@ -9,10 +9,15 @@ public class RaycastController : MonoBehaviour
     public BoxCollider scrollForwardsCollider;
     public ControlCanvas controlCanvas;
 
+    // LineRenderer used for testing
+    private LineRenderer lineRenderer;
+
     private void Awake()
     {
         // Enable Eye Tracking:
         if (EyeManager.Instance != null) { EyeManager.Instance.EnableEyeTracking = true; }
+
+        //lineRenderer = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
@@ -23,12 +28,17 @@ public class RaycastController : MonoBehaviour
         Ray ray;
 
         if (Application.isEditor)
+        {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //lineRenderer.SetPosition(0, Camera.main.transform.position);
+            //lineRenderer.SetPosition(1, ray.direction * 10);
+        }
         else
         {
-            //EyeManager.Instance.GetCombindedEyeDirectionNormalized(out direction);
-            //ray = new Ray(Camera.main.transform.position, Camera.main.transform.position + direction);
-            ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+            EyeManager.Instance.GetCombindedEyeDirectionNormalized(out direction);
+            ray = new Ray(Camera.main.transform.position, direction);
+            //lineRenderer.SetPosition(0, Camera.main.transform.position);
+            //lineRenderer.SetPosition(1, ray.direction * 10);
         }
 
         if (Physics.Raycast(ray, out hit))
